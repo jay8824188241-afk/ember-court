@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ember Court — a lane-battle card game</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="src/style.css">
+</head>
+<body>
+<div id="app">
+  <header id="topbar">
+    <div class="brand">Ember Court</div>
+    <div id="turn-banner">Your turn</div>
+    <div id="mana-bar"></div>
+  </header>
+  <main id="table">
+    <div id="foe-row">
+      <div class="hero foe-hero">
+        <span class="hero-name">The Warden</span>
+        <span class="life" id="foe-life">20</span>
+        <span class="hero-sub">opponent</span>
+      </div>
+      <div id="foe-hand-backs"></div>
+    </div>
+    <div id="lanes">
+      <div class="lane" data-lane="0">
+        <div class="slots foe-slots"></div>
+        <div class="lane-label">I</div>
+        <div class="slots you-slots"></div>
+      </div>
+      <div class="lane" data-lane="1">
+        <div class="slots foe-slots"></div>
+        <div class="lane-label">II</div>
+        <div class="slots you-slots"></div>
+      </div>
+      <div class="lane" data-lane="2">
+        <div class="slots foe-slots"></div>
+        <div class="lane-label">III</div>
+        <div class="slots you-slots"></div>
+      </div>
+    </div>
+    <div id="you-row">
+      <div class="hero you-hero">
+        <span class="hero-name">You</span>
+        <span class="life" id="you-life">20</span>
+        <span class="hero-sub">challenger</span>
+      </div>
+      <div id="you-hand"></div>
+      <button id="end-turn">End Turn</button>
+    </div>
+    <div id="log"></div>
+  </main>
+</div>
+<div id="title-screen" class="overlay">
+  <div class="panel">
+    <h1>Ember Court</h1>
+    <p class="tagline">A lane-battle card duel of fire, tide, gale and stone.</p>
+    <p class="howto">Play creatures into three lanes. Spend mana, outwit the Warden, and bring their life to zero. Ember beats Gale, Gale beats Stone, Stone beats Tide, Tide beats Ember — a winning element strikes +1 harder.</p>
+    <button id="start-btn">Begin the Duel</button>
+    <p class="keys">Click a card, then a lane. Keys 1–6 pick a card, Enter ends the turn.</p>
+  </div>
+</div>
+<div id="end-screen" class="overlay hidden">
+  <div class="panel">
+    <h1 id="end-title">Victory</h1>
+    <p id="end-text"></p>
+    <button id="again-btn">Play Again</button>
+  </div>
+</div>
+<script type="module" src="src/main.js"></script>
+</body>
+</html>
