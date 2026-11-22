@@ -64,11 +64,17 @@ export async function takeFoeTurn(game, rerender) {
       continue;
     }
     const burst = hand.find((c) => c.spell === 'damage');
-    const bigThreat = youCreatures(game)
-      .filter((t) => t.card.attack >= 4)
-      .sort((a, b) => b.card.attack - a.card.attack)[0];
-    if (burst && bigThreat && burst.cost <= game.mana.foe) {
-      game.castSpell('foe', burst.uid, bigThreat.card.uid);
+    // Cinder Burst deals burst.amount damage: spend it only where it kills.
+    // Chipping a 4-health creature leaves it alive and still hitting for full
+    // attack, while a killable attacker stays on the board. So pick the
+    // strongest enemy creature the burst can remove outright (highest attack,
+    // then toughest body); if none can die to it, hold the spell for a later
+    // turn instead of wasting the Warden's only removal.
+    const killable = burst ? youCreatures(game)
+      .filter((t) => t.card.health <= burst.amount)
+      .sort((a, b) => b.card.attack - a.card.attack || b.card.health - a.card.health)[0] : null;
+    if (burst && killable && burst.cost <= game.mana.foe) {
+      game.castSpell('foe', burst.uid, killable.card.uid);
       rerender();
       await sleep(500);
       continue;
